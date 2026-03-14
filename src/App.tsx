@@ -1,34 +1,84 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import type { KeyboardEvent } from "react";
+import type { ChangeEvent } from "react";
+
+import './App.scss'
+import TasksList from './components/TasksList';
+import type { ITask } from './types/Base.types';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [taskName, setTaskName] = useState<string>('');
+
+  const addNewTask = () => {
+    if (taskName) {
+      const newTask = {
+        title: taskName,
+        id: Date.now(),
+        isActive: true
+      }
+      setTasks(prev => [...prev, newTask])
+      setTaskName('')
+    }
+  }
+
+  const check = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key  === 'Enter') {
+      addNewTask();
+    }
+  }
+
+  const removeTask = (id: number) => {
+    setTasks(tasks => tasks.filter(item => item.id !== id))
+  }
+
+  const editTask = (id: number, title: string) => {
+    const currentTasks = [...tasks];
+    currentTasks.map((item: ITask) => {
+      if (item.id === id) {
+        item.title = title
+      }
+      return item;
+    })
+    setTasks(currentTasks);
+  }
+
+  const changeStatusTask = (event: ChangeEvent<HTMLInputElement>, id: number) => {
+    const currentTasks = [...tasks];
+    currentTasks.map((item: ITask) => {
+      if (item.id === id) {
+        item.isActive = !event.target.checked
+      }
+      return item;
+    })
+    setTasks(currentTasks);
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className='app-wrapper'>
+      <h1>ToDo app</h1>
+      <hr />
+      <div className="create-new-task">
+        <input type="text" 
+               value={taskName}
+               placeholder='Добавь текст задачи...'
+               onChange={(e) => setTaskName(e.target.value)}
+               onKeyUp={(e) => check(e)}
+        />
+        <button 
+          className='add-button'
+          type='button'
+          disabled={!taskName.trim()}
+          onClick={addNewTask}>
+            Add new task
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <TasksList 
+        tasks={tasks}
+        changeStatusTask={changeStatusTask}
+        editTask={editTask}
+        removeTask={removeTask} />
+    </div>
   )
 }
 
