@@ -36,7 +36,7 @@ function App() {
     const currentTasks = [...tasks];
     currentTasks.map((item: ITask) => {
       if (item.id === id) {
-        item.title = title
+        return { ...item, title }
       }
       return item;
     })

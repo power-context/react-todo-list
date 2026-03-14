@@ -1,10 +1,10 @@
-import type { ITask } from "../types/Base.types"
+import type { TasksListProps } from "../types/Base.types"
 import TaskItem from "./TaskItem";
 
-const TasksList = ({ tasks, changeStatusTask, removeTask, editTask }: { tasks: ITask[], changeStatusTask: any, removeTask: any, editTask: any }) => {
+const TasksList = ({ tasks, changeStatusTask, removeTask, editTask }: TasksListProps) => {
   return (
     <div className="tasks-wrapper">
-    {tasks && tasks.length 
+    {tasks.length 
       ?
       tasks.map((item, index) => 
         <TaskItem 

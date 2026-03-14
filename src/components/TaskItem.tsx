@@ -1,8 +1,8 @@
 import { MdDeleteOutline, MdOutlineDone, MdOutlineModeEdit } from "react-icons/md"
-import type { ITask, TTaskMode } from "../types/Base.types"
+import type { TasksItemProps, TTaskMode } from "../types/Base.types"
 import { useState } from "react";
 
-const TaskItem = ({item, index, changeStatusTask, removeTask, editTask}: {item: ITask, index: number, changeStatusTask: any, removeTask: any, editTask: any}) => {
+const TaskItem = ({item, index, changeStatusTask, removeTask, editTask}: TasksItemProps) => {
     const [mode, setMode] = useState<TTaskMode>('show');
     const [taskName, setTaskName] = useState<string>(item.title);
 
@@ -12,12 +12,11 @@ const TaskItem = ({item, index, changeStatusTask, removeTask, editTask}: {item: 
         setMode('show');
     }
     return (
-        <div
-            key={item.id} 
-            className={`task-item ${!item.isActive ? 'inactive' : ''}`}>
+        <div className={`task-item ${!item.isActive ? 'inactive' : ''}`}>
           <div className="left-side">
             <input 
                 type="checkbox"
+                checked={item.isActive}
                 onChange={(e) => changeStatusTask(e, item.id)}
                 className='change-status'/>
             <span style={{fontWeight: 'bold', marginRight: '5px'}}>{index + 1}.</span>
