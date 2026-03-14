@@ -46,10 +46,7 @@ function App() {
   const changeStatusTask = (event: ChangeEvent<HTMLInputElement>, id: number) => {
     const currentTasks = [...tasks];
     currentTasks.map((item: ITask) => {
-      if (item.id === id) {
-        item.isActive = !event.target.checked
-      }
-      return item;
+      item.id === id ? item.isActive = !event.target.checked : item
     })
     setTasks(currentTasks);
   }
