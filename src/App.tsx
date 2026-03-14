@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { KeyboardEvent } from "react";
 import type { ChangeEvent } from "react";
 
@@ -9,6 +9,11 @@ import type { ITask } from './types/Base.types';
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [taskName, setTaskName] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task: ITask) => task.title.toLowerCase().includes(searchQuery.toLowerCase().trim()));
+  }, [tasks, searchQuery]);
 
   const addNewTask = () => {
     if (taskName) {
@@ -55,6 +60,22 @@ function App() {
     <div className='app-wrapper'>
       <h1>ToDo app</h1>
       <hr />
+      <div className="filter-tasks">
+        <input type="text" 
+               value={searchQuery}
+               placeholder='Ищите, поручик!'
+               onChange={(e) => setSearchQuery(e.target.value)}
+               onKeyUp={(e) => check(e)}
+        />
+        {/* <button 
+          className='add-button'
+          type='button'
+          disabled={!searchQuery.trim()}
+          onClick={addNewTask}>
+            Search
+        </button> */}
+      </div>
+      <hr />
       <div className="create-new-task">
         <input type="text" 
                value={taskName}
@@ -71,7 +92,7 @@ function App() {
         </button>
       </div>
       <TasksList 
-        tasks={tasks}
+        tasks={filteredTasks}
         changeStatusTask={changeStatusTask}
         editTask={editTask}
         removeTask={removeTask} />
