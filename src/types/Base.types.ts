@@ -20,3 +20,16 @@ export interface TasksItemProps {
     removeTask: (id: number) => void
     editTask: (id: number, title: string) => void
 }
+
+export interface AddTaskProps {
+    taskName: string
+    setTaskName: React.Dispatch<React.SetStateAction<string>>
+    check: (e: React.KeyboardEvent<HTMLInputElement>) => void
+    addNewTask: () => void
+}
+
+export interface FilterTaskProps {
+    searchQuery: string
+    setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+    check: (e: React.KeyboardEvent<HTMLInputElement>) => void
+}

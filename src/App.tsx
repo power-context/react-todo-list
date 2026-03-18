@@ -5,6 +5,8 @@ import type { ChangeEvent } from "react";
 import './App.scss'
 import TasksList from './components/TasksList';
 import type { ITask } from './types/Base.types';
+import AddTask from './components/AddTask';
+import FilterTasks from './components/FilterTasks';
 
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -60,37 +62,18 @@ function App() {
     <div className='app-wrapper'>
       <h1>ToDo app</h1>
       <hr />
-      <div className="filter-tasks">
-        <input type="text" 
-               value={searchQuery}
-               placeholder='Ищите, поручик!'
-               onChange={(e) => setSearchQuery(e.target.value)}
-               onKeyUp={(e) => check(e)}
-        />
-        {/* <button 
-          className='add-button'
-          type='button'
-          disabled={!searchQuery.trim()}
-          onClick={addNewTask}>
-            Search
-        </button> */}
-      </div>
+      <FilterTasks
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        check={check}
+      />
       <hr />
-      <div className="create-new-task">
-        <input type="text" 
-               value={taskName}
-               placeholder='Добавь текст задачи...'
-               onChange={(e) => setTaskName(e.target.value)}
-               onKeyUp={(e) => check(e)}
-        />
-        <button 
-          className='add-button'
-          type='button'
-          disabled={!taskName.trim()}
-          onClick={addNewTask}>
-            Add new task
-        </button>
-      </div>
+      <AddTask
+        taskName={taskName}
+        setTaskName={setTaskName}
+        check={check}
+        addNewTask={addNewTask}
+      />
       <TasksList 
         tasks={filteredTasks}
         changeStatusTask={changeStatusTask}
