@@ -40,22 +40,16 @@ function App() {
   }
 
   const editTask = (id: number, title: string) => {
-    const currentTasks = [...tasks];
-    currentTasks.map((item: ITask) => {
-      if (item.id === id) {
-        return { ...item, title }
-      }
-      return item;
-    })
-    setTasks(currentTasks);
+    setTasks(tasks => tasks.map(item => {
+      return item.id === id ? { ...item, title } : item
+    }));
   }
 
   const changeStatusTask = (event: ChangeEvent<HTMLInputElement>, id: number) => {
-    const currentTasks = [...tasks];
-    currentTasks.map((item: ITask) => {
+    setTasks(tasks => tasks.map((item: ITask) => {
       item.id === id ? item.isActive = !event.target.checked : item
-    })
-    setTasks(currentTasks);
+      return item;
+    }));
   }
 
   return (
