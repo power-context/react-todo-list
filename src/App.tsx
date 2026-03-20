@@ -10,14 +10,13 @@ import FilterTasks from './components/FilterTasks';
 
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
-  const [taskName, setTaskName] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task: ITask) => task.title.toLowerCase().includes(searchQuery.toLowerCase().trim()));
   }, [tasks, searchQuery]);
 
-  const addNewTask = () => {
+  const addNewTask = (taskName: string) => {
     if (taskName) {
       const newTask = {
         title: taskName,
@@ -25,13 +24,14 @@ function App() {
         isActive: true
       }
       setTasks(prev => [...prev, newTask])
-      setTaskName('')
     }
   }
 
-  const check = (e: KeyboardEvent<HTMLInputElement>) => {
+  const checkKeyboardEvent = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key  === 'Enter') {
-      addNewTask();
+      if (e.currentTarget.value) {
+        addNewTask(e.currentTarget.value);
+      }
     }
   }
 
@@ -59,13 +59,10 @@ function App() {
       <FilterTasks
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        check={check}
+        checkKeyboardEvent={checkKeyboardEvent}
       />
       <hr />
       <AddTask
-        taskName={taskName}
-        setTaskName={setTaskName}
-        check={check}
         addNewTask={addNewTask}
       />
       <TasksList 

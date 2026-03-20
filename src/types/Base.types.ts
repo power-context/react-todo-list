@@ -22,14 +22,11 @@ export interface TasksItemProps {
 }
 
 export interface AddTaskProps {
-    taskName: string
-    setTaskName: React.Dispatch<React.SetStateAction<string>>
-    check: (e: React.KeyboardEvent<HTMLInputElement>) => void
-    addNewTask: () => void
+    addNewTask: (taskName: string) => void
 }
 
 export interface FilterTaskProps {
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-    check: (e: React.KeyboardEvent<HTMLInputElement>) => void
+    checkKeyboardEvent: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
