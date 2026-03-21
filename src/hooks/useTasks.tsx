@@ -14,8 +14,7 @@ const useTasks = () => {
 
     const sortedFilteredTasks = useMemo(() => {
       if (sortMode) {
-        const tempFilteredTasks = [...filteredTasks];
-        return sortItems(tempFilteredTasks, sortMode)
+        return sortItems(filteredTasks, sortMode)
       } else {
         return filteredTasks;
       }
