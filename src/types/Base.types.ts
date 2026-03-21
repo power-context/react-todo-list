@@ -6,6 +6,8 @@ export interface ITask {
 
 export type TTaskMode = 'show' | 'edit'
 
+export type TSortMode = 'A-Z' | 'Z-A'
+
 export interface TasksListProps {
     tasks: ITask[]
     changeStatusTask: (id: number) => void
@@ -29,4 +31,9 @@ export interface FilterTaskProps {
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     handleEnterKey: (e: React.KeyboardEvent<HTMLInputElement>) => void
+}
+
+export interface SortTaskProps {
+    sortMode: TSortMode | undefined
+    setSortMode: React.Dispatch<React.SetStateAction<TSortMode | undefined>>
 }

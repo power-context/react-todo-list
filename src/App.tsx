@@ -3,10 +3,11 @@ import TasksList from './components/TasksList';
 import AddTask from './components/AddTask';
 import FilterTasks from './components/FilterTasks';
 import useTasks from './hooks/useTasks';
+import SortTasks from './components/SortTasks';
 
 function App() {
   const {
-    filteredTasks,
+    sortedFilteredTasks,
     addNewTask,
     editTask,
     changeStatusTask,
@@ -14,6 +15,8 @@ function App() {
     searchQuery,
     setSearchQuery,
     handleEnterKey,
+    setSortMode,
+    sortMode
   } = useTasks();
 
   return (
@@ -29,8 +32,12 @@ function App() {
       <AddTask
         addNewTask={addNewTask}
       />
+      <SortTasks 
+        sortMode={sortMode}
+        setSortMode={setSortMode}
+      />
       <TasksList 
-        tasks={filteredTasks}
+        tasks={sortedFilteredTasks}
         changeStatusTask={changeStatusTask}
         editTask={editTask}
         removeTask={removeTask} />

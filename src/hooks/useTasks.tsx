@@ -1,14 +1,26 @@
 import { useMemo, useState } from "react";
 import type { KeyboardEvent } from "react";
-import type { ITask } from "../types/Base.types";
+import type { ITask, TSortMode } from "../types/Base.types";
+import { sortItems } from "../utils.ts/tasks";
 
 const useTasks = () => {
     const [tasks, setTasks] = useState<ITask[]>([]);
+    const [sortMode, setSortMode] = useState<TSortMode | undefined>(undefined);
     const [searchQuery, setSearchQuery] = useState('');
 
     const filteredTasks = useMemo(() => {
         return tasks.filter((task: ITask) => task.title.toLowerCase().includes(searchQuery.toLowerCase().trim()));
       }, [tasks, searchQuery]);
+
+    const sortedFilteredTasks = useMemo(() => {
+      if (sortMode) {
+        const tempFilteredTasks = [...filteredTasks];
+        return sortItems(tempFilteredTasks, sortMode)
+      } else {
+        return filteredTasks;
+      }
+    }, [filteredTasks, sortMode])
+
 
       const addNewTask = (taskName: string) => {
         if (taskName) {
@@ -50,14 +62,16 @@ const useTasks = () => {
       }
 
     return {
-        filteredTasks,
-        addNewTask,
-        editTask,
-        changeStatusTask,
-        removeTask,
-        searchQuery,
-        setSearchQuery,
-        handleEnterKey,
+      sortedFilteredTasks,
+      addNewTask,
+      editTask,
+      changeStatusTask,
+      removeTask,
+      searchQuery,
+      setSearchQuery,
+      handleEnterKey,
+      setSortMode,
+      sortMode
     };
 }
 
