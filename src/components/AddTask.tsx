@@ -19,7 +19,7 @@ const AddTask = ({addNewTask}: AddTaskProps) => {
                 value={taskName}
                 placeholder='Добавь текст задачи...'
                 onChange={(e) => setTaskName(e.target.value)}
-                onKeyUp={(e) => checkNewTask(e)}
+                onKeyDown={(e) => checkNewTask(e)}
             />
             <button 
             className='add-button'

@@ -8,7 +8,7 @@ export type TTaskMode = 'show' | 'edit'
 
 export interface TasksListProps {
     tasks: ITask[]
-    changeStatusTask: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void
+    changeStatusTask: (id: number) => void
     removeTask: (id: number) => void
     editTask: (id: number, title: string) => void
 }
@@ -16,7 +16,7 @@ export interface TasksListProps {
 export interface TasksItemProps {
     item: ITask
     index: number
-    changeStatusTask: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void
+    changeStatusTask: (id: number) => void
     removeTask: (id: number) => void
     editTask: (id: number, title: string) => void
 }
@@ -28,5 +28,5 @@ export interface AddTaskProps {
 export interface FilterTaskProps {
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-    checkKeyboardEvent: (e: React.KeyboardEvent<HTMLInputElement>) => void
+    handleEnterKey: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }

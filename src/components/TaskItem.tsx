@@ -17,7 +17,7 @@ const TaskItem = ({item, index, changeStatusTask, removeTask, editTask}: TasksIt
             <input 
                 type="checkbox"
                 checked={!item.isActive}
-                onChange={(e) => changeStatusTask(e, item.id)}
+                onChange={() => changeStatusTask(item.id)}
                 className='change-status'/>
             <span style={{fontWeight: 'bold', marginRight: '5px'}}>{index + 1}.</span>
             {

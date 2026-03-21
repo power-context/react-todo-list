@@ -27,7 +27,7 @@ function App() {
     }
   }
 
-  const checkKeyboardEvent = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleEnterKey = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key  === 'Enter') {
       if (e.currentTarget.value) {
         addNewTask(e.currentTarget.value);
@@ -45,11 +45,14 @@ function App() {
     }));
   }
 
-  const changeStatusTask = (event: ChangeEvent<HTMLInputElement>, id: number) => {
-    setTasks(tasks => tasks.map((item: ITask) => {
-      item.id === id ? item.isActive = !event.target.checked : item
-      return item;
-    }));
+  const changeStatusTask = (id: number) => {
+    setTasks(tasks =>
+      tasks.map(item =>
+        item.id === id
+          ? { ...item, isActive: !item.isActive }
+          : item
+      )
+    );
   }
 
   return (
@@ -59,7 +62,7 @@ function App() {
       <FilterTasks
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        checkKeyboardEvent={checkKeyboardEvent}
+        handleEnterKey={handleEnterKey}
       />
       <hr />
       <AddTask
