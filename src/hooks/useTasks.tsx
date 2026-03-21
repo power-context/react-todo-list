@@ -8,17 +8,14 @@ const useTasks = () => {
     const [sortMode, setSortMode] = useState<TSortMode | undefined>(undefined);
     const [searchQuery, setSearchQuery] = useState('');
 
-    const filteredTasks = useMemo(() => {
-        return tasks.filter((task: ITask) => task.title.toLowerCase().includes(searchQuery.toLowerCase().trim()));
-      }, [tasks, searchQuery]);
-
     const sortedFilteredTasks = useMemo(() => {
+      const filteredTasks = tasks.filter((task: ITask) => task.title.toLowerCase().includes(searchQuery.toLowerCase().trim()));
       if (sortMode) {
         return sortItems(filteredTasks, sortMode)
       } else {
         return filteredTasks;
       }
-    }, [filteredTasks, sortMode])
+    }, [tasks, sortMode, searchQuery])
 
 
       const addNewTask = (taskName: string) => {
